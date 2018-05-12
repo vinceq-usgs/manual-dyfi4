@@ -1,32 +1,271 @@
 Implementation Guide
 ====================
 
+The implementation of DYFI Version 4 features a number of changes from previous versions to bring it up-to-date with modern programming standards: 
+
+- Development is now in Github, an open-source repository. 
+
+- The codebase now uses Python in line with coding standards of other USGS earthquake products. 
+
+- Graphics rendering has moved from Generic Mapping Tools (GMT) to Leaflet rendering for map products, and D3 for graph products.
+
+- The database is now implemented in Sqlite3 for its lighter resource footprint.
+
 Installation
 ------------
+
+DYFI installation should be straightforward. Miniconda (https://conda.io) is the preferred package and environment manager. The included install script (`install.sh`) uses *conda* to install the required packages automatically.
+
+The file `environment.yml` file lists the DYFI dependencies.
 
 Python modules:
 
 ==========  =======  =============================================
-geojson     1.3.3+   For output products
-pyyaml               For configuration file
-numpy       1.11.2   Numerical manipulation in :py:obj:`graph.py`
-geopy       1.11.0+  Use great_circle for filtering and graphing
 apng                 For :py:obj:`makemovie.py`
-defusedxml  0.5.0+   For creating :py:obj:`contents.xml`
-utm         0.4.2    TODO link to utm repo
 codecov              For debugging only
+defusedxml  0.5.0+   For creating :py:obj:`contents.xml`
+geopy       1.11.0+  Use great_circle for filtering and graphing
+geojson     1.3.3+   For output products
+numpy       1.11.2   Numerical manipulation in :py:obj:`graph.py`
+pytest               For debugging only
+pytest-cov           For debugging only
+pyyaml               For configuration files
+sqlite               Implements the DYFI database
 ==========  =======  =============================================
 
-Implementation notes
---------------------
+Additional dependencies
+-----------------------
 
-- Triggering of events
+- PhantomJS <http://phantomjs.org/) renders maps into static images (PNG). Normally, the :file:`install.sh` script installs this via `conda`.
 
-- User data: the questionnaire, compatibility
+- Leaflet (http://leafletjs.com) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the `leaflet/inc` directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the `leaflet/viewer.html` file for an example of invoking Leaflet via CDN.)
 
-- User data: networks, security, liability
+- utm (https://pypi.python.org/pypi/utm) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory `dyfi/thirdparty/utm`.
 
-- Output and web pages
+Configuration file
+------------------
 
-- Data exchange
+The DYFI4 configuration file :file:`config.yml` is in the YAML file format (http://yaml.org).
+
+Most DYFI4 executables can be called with the --config flag to use another, custom configuration file (for testing, for example.)
+
+The file has five sections:
+
+- *db:* This describes the location and type of the DYFI database (see below).
+
+- *directories:* This has links to the data directories.
+
+  - *data:* This points to the output directories. The DYFI4 products for each event ID are stored here, under its own event ID subdirectory.
+
+  - *leaflet:* This points to the directory where Leaflet processing is done. See :obj:`Generation of map products`.
+
+- *executables:*
+
+- *products:* 
+
+- *filter:* This holds settings for filtering entries (to reject bogus or suspect ones). See :obj:`Filtering of entries`.
+
+The DYFI database
+-----------------
+
+The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in */tests/db/*. 
+
+We recommend that the tables be placed in a directory such as */db/*. To change the database location, modify the settings for each database file in :file:`config.yml` file under *db:files*.
+
+Each table is a separate file.
+
+Event table
++++++++++++
+
+==========   ===========================
+File         :file:`event.db`
+Table name   *event*
+==========   ===========================
+
+This table holds data for individual earthquake events; most importantly, event earthquake location and time. Each row corresponds to one event.
+
+This table is normally populated by event information from the USGS Comprehensive Earthquake Catalog, or ComCat (https://earthquake.usgs.gov/data/comcat/). This table holds data information for individual earthquake events. A sample table is included (beginning from 2015). 
+
+The event data is described below. 
+
+=====================  =========================================================================
+Column                 Description
+---------------------  -------------------------------------------------------------------------
+eventid                USGS event ID, usually 10 characters; primary key
+mag                    Magnitude
+lat                    Epicentral latitude 
+lon                    Epicentral longitude
+depth                  Hypocentral depth
+region                 obsolete
+source                 2 letter network code
+mainshock              obsolete
+loc                    Text description of the location (e.g. "9km ENE of San Simeon, CA") 
+nresponses             Number of DYFI responses attached to this event
+eventdatetime          Earthquake event time in YYYY-MM-DD HH:MM:SS format
+createdtime            Time that this row was last created or updated
+newresponses           Number of DYFI responses for this event since the last time this was run
+run_flag               obsolete
+citydb                 obsolete
+zipdb                  obsolete
+ciim_version           Incremented whenever :obj:`rundyfi.py` runs
+code_version           Current version of DYFI when this event was last run
+process_timestamp      Time when :obj:`rundyfi.py` was last run
+max_intensity          Maximum computed intensity
+sent_email             obsolete
+event_version          Event information version (from ComCat) 
+orig_id                Original USGS event ID 
+eventlocaltime         Event local time (from ComCat)
+invisible              see below
+good_id                obsolete
+=====================  =========================================================================
+
+All columns are Sqlite text fields.
+
+The column *newresponses* is updated by the backend whenever a new user response is processed, and is reset to zero whenever the :obj:`rundyfi.py` runs. This is how the backend knows when :obj:`rundyfi.py` should be triggered.
+
+The column *orig_id* is initially the same as *eventid*. This allows the 
+first event ID to be archived in case the event ID is manually changed.
+
+The column *invisible* is set to true when an event is no longer valid, and DYFI products are no longer applicable. Examples are bogus, duplicate, or non-authoritative events. These events will not be exported, and responses will not be automatically associated to them. (They may still be run manually.)
+
+.. note::
+
+    Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
+
+Extended tables
++++++++++++++++
+
+==========   ===========================
+File         :file:`extended_NNNN.db`
+Table name   *extended_NNNN*
+==========   ===========================
+
+This table holds data for DYFI felt data. Each row corresponds to one user response. This table is populated from the DYFI Questionnaire (see https://earthquake.usgs.gov/data/dyfi/background.php).
+
+Because of the size of the DYFI response data (2 million+ responses as of 2018), each year of data is stored in a separate file. The files and tables are named :file:`extended_NNNN.db` and *extended_NNNN* where NNNN is the 4 digit year. The earliest provided year is 2003. Events before this are stored in the file :file:`extended_pre.db` in the table *extended_pre*.
+
+Sample extended tables for 2015 and 2016 are included, with personally identifiable information (PII) redacted.
+
+The extended table data is described below. 
+
+=====================  =========================================================================
+Column                 Description
+---------------------  -------------------------------------------------------------------------
+subid                  Integer type unique primary key for each row
+eventid                Event ID that this response is associated to
+orig_id                Original event ID when response was processed
+suspect                Flag for responses that are bogus or outliers
+region                 obsolete
+usertime               DYFI Felt Report, see below
+time_now               Time this reply was submitted in YYYY-MM-DD HH:MM:SS format
+latitude               User latitude
+longitude              User longitude
+geo_source             obsolete
+zip                    obsolete
+zip_4                  obsolete
+city                   obsolete
+admin_region           obsolete
+country                obsolete
+street                 DYFI Felt Report, see below
+name                   DYFI Felt Report
+email                  DYFI Felt Report
+phone                  DYFI Felt Report
+situation              DYFI Felt Report
+building               DYFI Felt Report
+asleep                 DYFI Felt Report 
+felt                   DYFI Felt Report
+other_felt             DYFI Felt Report
+motion                 DYFI Felt Report
+duration               DYFI Felt Report
+reaction               DYFI Felt Report
+response               DYFI Felt Report
+stand                  DYFI Felt Report
+sway                   DYFI Felt Report
+creak                  DYFI Felt Report
+shelf                  DYFI Felt Report
+picture                DYFI Felt Report
+furniture              DYFI Felt Report
+heavy_appliance        DYFI Felt Report
+walls                  DYFI Felt Report
+slide_1_foot           DYFI Felt Report
+d_text                 DYFI Felt Report
+damage                 obsolete
+building_details       DYFI Felt Report 
+comments               DYFI Felt Report
+user_cdi               Computed from DYFI Felt Report
+city_latitude          obsolete
+city_longitude         obsolete 
+city_population        obsolete 
+zip_latitude           obsolete 
+zip_longitude          obsolete
+location               obsolete
+tzoffset               obsolete
+confidence             Estimate of geocoding confidence, see below
+version                obsolete
+citydb                 obsolete
+cityid                 obsolete
+=====================  =========================================================================
+
+
+All columns are Sqlite text fields unless indicated otherwise.
+
+The column *orig_id* is initially the same as *eventid*. For responses that were not originally attached to an event ("unassociated entries"), both fields would have the value "unknown". This allows the original data to be archived in case the this entry is associated or manually updated.
+
+The column *suspect* is set automatically by the :py:obj:`Entry` module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.
+
+The column *time_now* is set by the DYFI Felt Report submit function. This is the time used for associating entries.
+
+The column *usertime* is filled in by the user. It is not automatically parsed; it is for the operator's information only.
+
+The columns *latitude* and *longitude* are automatically filled in by the geocoding function of they DYFI Felt Report.
+
+The column *confidence* is an estimate from the geocoding function of the precision of the latitude and longitude output. See `Geocoding` for details.
+
+The column *user_cdi* is the value computed by the form the user's intensity (only), with no aggregation. It is a quick way to look for outlier entries, but it is not used in DYFI computation.
+
+.. note::
+
+    Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
+
+Generation of map products
+--------------------------
+
+The DYFI 'signature product' is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the :obj:`Product Guide`). 
+
+The USGS Web Pages use the `Leaflet` rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as `OpenLayers`, or a GIS application.
+
+Creation of static images
+-------------------------
+
+.. note::
+
+    The `PhantomJS` package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.
+
+DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure.
+
+1. The :py:obj:`Aggregate` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
+
+2. The :py:obj:`Map` class adds the event data (epicentral location and magnitude).
+
+3. The :py:obj:`Map.toImage` saves the GeoJSON data into a temporary file in the :dir:`leaflet` directory.
+
+4. The file :file:`leaflet/viewer.html` is an HTML Leaflet file that loads the GeoJSON file and renders the map. By default, the open source `OpenStreetMaps` basemap is used.
+
+5. `PhantomJS` is run on the HTML page. This renders the HTML into a static PNG file.
+
+Auxillary functions
+-------------------
+
+The following topics are beyond the scope the core functionality and are described elsewhere.
+
+
+- USGS event page integration
+
+- Event triggering
+
+- Implementation of the questionnaire
+
+- Transfer of user data to the backend servers
+
+- Product distribution: PDL, Event Pages
 

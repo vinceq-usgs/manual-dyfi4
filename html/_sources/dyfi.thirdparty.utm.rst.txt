@@ -1,19 +1,19 @@
-dyfi.thirdparty.utm package
-===========================
+dyfi\.thirdparty\.utm package
+=============================
 
 Submodules
 ----------
 
-dyfi.thirdparty.utm.conversion module
--------------------------------------
+dyfi\.thirdparty\.utm\.conversion module
+----------------------------------------
 
 .. automodule:: dyfi.thirdparty.utm.conversion
     :members:
     :undoc-members:
     :show-inheritance:
 
-dyfi.thirdparty.utm.error module
---------------------------------
+dyfi\.thirdparty\.utm\.error module
+-----------------------------------
 
 .. automodule:: dyfi.thirdparty.utm.error
     :members:
