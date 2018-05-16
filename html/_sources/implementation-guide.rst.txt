@@ -11,6 +11,13 @@ The implementation of DYFI Version 4 features a number of changes from previous 
 
 - The database is now implemented in Sqlite3 for its lighter resource footprint.
 
+System flowchart
+----------------
+
+The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This manual only concerns itself with the backend server.
+
+[diagram_simple.svg]
+
 Installation
 ------------
 
