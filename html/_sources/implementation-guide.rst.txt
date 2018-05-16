@@ -16,7 +16,7 @@ System flowchart
 
 The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This manual only concerns itself with the backend server.
 
-.. image:: docs/diagram_simple.svg
+.. image:: diagram_simple.svg
 
 Installation
 ------------
