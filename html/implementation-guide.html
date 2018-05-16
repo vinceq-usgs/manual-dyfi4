@@ -52,7 +52,7 @@
 <div class="section" id="system-flowchart">
 <h2>System flowchart<a class="headerlink" href="#system-flowchart" title="Permalink to this headline">¶</a></h2>
 <p>The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This manual only concerns itself with the backend server.</p>
-<object data="diagram_simple.svg" type="image/svg+xml"></object></div>
+<object data="docs/diagram_simple.svg" type="image/svg+xml"></object></div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>DYFI installation should be straightforward. Miniconda (<a class="reference external" href="https://conda.io">https://conda.io</a>) is the preferred package and environment manager. The included install script (<cite>install.sh</cite>) uses <em>conda</em> to install the required packages automatically.</p>
@@ -475,7 +475,7 @@ first event ID to be archived in case the event ID is manually changed.</p>
 <ol class="arabic simple">
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Aggregate</span></code> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Map</span></code> class adds the event data (epicentral location and magnitude).</li>
-<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> saves the GeoJSON data into a temporary file in the <a href="#id1"><span class="problematic" id="id2">:dir:`leaflet`</span></a> directory.</li>
+<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> saves the GeoJSON data into a temporary file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory.</li>
 <li>The file <code class="file docutils literal"><span class="pre">leaflet/viewer.html</span></code> is an HTML Leaflet file that loads the GeoJSON file and renders the map. By default, the open source <cite>OpenStreetMaps</cite> basemap is used.</li>
 <li><cite>PhantomJS</cite> is run on the HTML page. This renders the HTML into a static PNG file.</li>
 </ol>

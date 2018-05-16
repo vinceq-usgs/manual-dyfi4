@@ -18,7 +18,7 @@ The following diagram shows the ideal configuration for the DYFI system, includi
 
 .. raw:: html
 
-    <object data="diagram_simple.svg" type="image/svg+xml"></object>
+    <object data="docs/diagram_simple.svg" type="image/svg+xml"></object>
 
 Installation
 ------------
@@ -256,7 +256,7 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 2. The :py:obj:`Map` class adds the event data (epicentral location and magnitude).
 
-3. The :py:obj:`Map.toImage` saves the GeoJSON data into a temporary file in the :dir:`leaflet` directory.
+3. The :py:obj:`Map.toImage` saves the GeoJSON data into a temporary file in the :file:`leaflet` directory.
 
 4. The file :file:`leaflet/viewer.html` is an HTML Leaflet file that loads the GeoJSON file and renders the map. By default, the open source `OpenStreetMaps` basemap is used.
 
