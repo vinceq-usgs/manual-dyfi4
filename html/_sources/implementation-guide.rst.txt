@@ -11,23 +11,6 @@ The implementation of DYFI Version 4 features a number of changes from previous 
 
 - The database is now implemented in Sqlite3 for its lighter resource footprint.
 
-System flowchart
-----------------
-
-The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.
-
-Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).
-
-.. image:: diagram_systems.svg
-
-The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the :doc:`Module List <modules>`.
-
-.. image:: diagram_flowchart.svg
-
-.. note::
-
-In the above diagrams, items shown in red contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.
-
 
 Installation
 ------------

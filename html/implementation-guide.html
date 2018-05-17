@@ -49,13 +49,6 @@
 <li>Graphics rendering has moved from Generic Mapping Tools (GMT) to Leaflet rendering for map products, and D3 for graph products.</li>
 <li>The database is now implemented in Sqlite3 for its lighter resource footprint.</li>
 </ul>
-<div class="section" id="system-flowchart">
-<h2>System flowchart<a class="headerlink" href="#system-flowchart" title="Permalink to this headline">¶</a></h2>
-<p>The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.</p>
-<p>Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).</p>
-<img alt="_images/diagram_systems.svg" src="_images/diagram_systems.svg" /><p>The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the <a class="reference internal" href="modules.html"><span class="doc">Module List</span></a>.</p>
-<img alt="_images/diagram_flowchart.svg" src="_images/diagram_flowchart.svg" /><p>In the above diagrams, items shown in red contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.</p>
-</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>DYFI installation should be straightforward. Miniconda (<a class="reference external" href="https://conda.io">https://conda.io</a>) is the preferred package and environment manager. The included install script (<cite>install.sh</cite>) uses <em>conda</em> to install the required packages automatically.</p>
@@ -505,7 +498,6 @@ first event ID to be archived in case the event ID is manually changed.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Implementation Guide</a><ul>
-<li><a class="reference internal" href="#system-flowchart">System flowchart</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#additional-dependencies">Additional dependencies</a></li>
 <li><a class="reference internal" href="#configuration-file">Configuration file</a></li>
