@@ -11,6 +11,14 @@ The implementation of DYFI Version 4 features a number of changes from previous 
 
 - The database is now implemented in Sqlite3 for its lighter resource footprint.
 
+System flowchart
+----------------
+
+The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.
+
+Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).
+
+.. image:: diagram_systems.svg
 
 Installation
 ------------
@@ -66,14 +74,14 @@ The file has five sections:
 
 - *filter:* This holds settings for filtering entries (to reject bogus or suspect ones). See :obj:`Filtering of entries`.
 
-The DYFI database
------------------
+Database implementation
+------------------------------
 
 The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in */tests/db/*. 
 
 We recommend that the tables be placed in a directory such as */db/*. To change the database location, modify the settings for each database file in :file:`config.yml` file under *db:files*. Each table is a separate file.
 
-For details on the various database tables see :doc:`Database operations` in the Technical Guide.
+For details on the various database tables see :doc:`Technical Guide` under :doc:`Database operations`. 
 
 Event table
 +++++++++++
@@ -102,21 +110,14 @@ Because of the size of the DYFI response data (2 million+ responses as of 2018),
 Sample extended tables for 2015 and 2016 are included, with personally identifiable information (PII) redacted.
 
 
-Generation of map products
---------------------------
-
-The DYFI 'signature product' is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the :obj:`Product Guide`). 
-
-The USGS Web Pages use the `Leaflet` rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as `OpenLayers`, or a GIS application.
-
-Creation of static images
--------------------------
+Generation of dynamic and static image maps
+--------------------------------------------
 
 .. note::
 
     The `PhantomJS` package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.
 
-DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure.
+DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.
 
 1. The :py:obj:`Aggregate` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
 
@@ -128,13 +129,14 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 5. `PhantomJS` is run on the HTML page. This renders the HTML into a static PNG file.
 
-Auxillary functions
--------------------
+Auxillary processes
+--------------------
 
-The following topics are beyond the scope this CORE manual and are described elsewhere.
+The following topics are beyond the scope this CORE manual because they describe systems exclusive to the USGS. These topics will be described elsewhere.
 
+- USGS Event Page integration
 
-- USGS event page integration
+- USGS Product Distribution Layer, or `PDL <https://usgs.github.io/pdl/>`
 
 - Event triggering
 

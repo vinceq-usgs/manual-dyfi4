@@ -1,0 +1,20 @@
+Scientific Discussion
+---------------------
+
+A stub for the Scientific Discussion.
+
+Flowchart
+=========
+
+
+Aggregation
+===========
+
+Intensity calculation
+=====================
+
+
+Filtering of entries
+====================
+
+

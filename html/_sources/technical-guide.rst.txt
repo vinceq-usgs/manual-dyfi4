@@ -1,14 +1,8 @@
 Technical Guide
 ===============
 
-System flowchart
-----------------
-
-The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.
-
-Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).
-
-.. image:: diagram_systems.svg
+Process flowchart
+-----------------
 
 The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the :doc:`Module List <modules>`.
 
@@ -19,11 +13,11 @@ The following diagram shows the flowchart for the creation of DYFI products. Obj
     In the above diagrams, items shown in red contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.
 
 
-Database operations
--------------------
+Input streams
+-------------
 
-Event table
-+++++++++++
+Earthquake events
+.................
 
 The event data is described below.
 
@@ -71,8 +65,8 @@ The column *invisible* is set to true when an event is no longer valid, and DYFI
 
     Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
 
-Extended tables
-+++++++++++++++
+User responses
+.................
 
 The extended table data is described below.
 
@@ -155,23 +149,16 @@ The column *user_cdi* is the value computed by the form the user's intensity (on
     Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
 
 
-Input streams
--------------
-
-Earthquake events
-.................
-
-User responses
-..............
-
 UTM-based Aggregation
 ---------------------
 
-Creating dynamic products
+
+DYFI products
 -------------------------
 
-Creating static products
-------------------------
+The DYFI 'signature product' is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the :obj:`Product Guide`).
+
+The USGS Web Pages use the `Leaflet` rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as `OpenLayers`, or a GIS application.
 
 For the creation of static images, see the :doc:`Implementation Guide <Creation of static images>`.
 

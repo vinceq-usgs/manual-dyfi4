@@ -49,6 +49,11 @@
 <li>Graphics rendering has moved from Generic Mapping Tools (GMT) to Leaflet rendering for map products, and D3 for graph products.</li>
 <li>The database is now implemented in Sqlite3 for its lighter resource footprint.</li>
 </ul>
+<div class="section" id="system-flowchart">
+<h2>System flowchart<a class="headerlink" href="#system-flowchart" title="Permalink to this headline">¶</a></h2>
+<p>The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.</p>
+<p>Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).</p>
+<img alt="_images/diagram_systems.svg" src="_images/diagram_systems.svg" /></div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>DYFI installation should be straightforward. Miniconda (<a class="reference external" href="https://conda.io">https://conda.io</a>) is the preferred package and environment manager. The included install script (<cite>install.sh</cite>) uses <em>conda</em> to install the required packages automatically.</p>
@@ -129,11 +134,11 @@
 <li><em>filter:</em> This holds settings for filtering entries (to reject bogus or suspect ones). See <code class="xref py py-obj docutils literal"><span class="pre">Filtering</span> <span class="pre">of</span> <span class="pre">entries</span></code>.</li>
 </ul>
 </div>
-<div class="section" id="the-dyfi-database">
-<h2>The DYFI database<a class="headerlink" href="#the-dyfi-database" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="database-implementation">
+<h2>Database implementation<a class="headerlink" href="#database-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in <em>/tests/db/</em>.</p>
 <p>We recommend that the tables be placed in a directory such as <em>/db/</em>. To change the database location, modify the settings for each database file in <code class="file docutils literal"><span class="pre">config.yml</span></code> file under <em>db:files</em>. Each table is a separate file.</p>
-<p>For details on the various database tables see <span class="xref std std-doc">Database operations</span> in the Technical Guide.</p>
+<p>For details on the various database tables see <span class="xref std std-doc">Technical Guide</span> under <span class="xref std std-doc">Database operations</span>.</p>
 <div class="section" id="event-table">
 <h3>Event table<a class="headerlink" href="#event-table" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -174,18 +179,13 @@
 <p>Sample extended tables for 2015 and 2016 are included, with personally identifiable information (PII) redacted.</p>
 </div>
 </div>
-<div class="section" id="generation-of-map-products">
-<h2>Generation of map products<a class="headerlink" href="#generation-of-map-products" title="Permalink to this headline">¶</a></h2>
-<p>The DYFI ‘signature product’ is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the <code class="xref py py-obj docutils literal"><span class="pre">Product</span> <span class="pre">Guide</span></code>).</p>
-<p>The USGS Web Pages use the <cite>Leaflet</cite> rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as <cite>OpenLayers</cite>, or a GIS application.</p>
-</div>
-<div class="section" id="creation-of-static-images">
-<h2>Creation of static images<a class="headerlink" href="#creation-of-static-images" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generation-of-dynamic-and-static-image-maps">
+<h2>Generation of dynamic and static image maps<a class="headerlink" href="#generation-of-dynamic-and-static-image-maps" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <cite>PhantomJS</cite> package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.</p>
 </div>
-<p>DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure.</p>
+<p>DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.</p>
 <ol class="arabic simple">
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Aggregate</span></code> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Map</span></code> class adds the event data (epicentral location and magnitude).</li>
@@ -194,11 +194,12 @@
 <li><cite>PhantomJS</cite> is run on the HTML page. This renders the HTML into a static PNG file.</li>
 </ol>
 </div>
-<div class="section" id="auxillary-functions">
-<h2>Auxillary functions<a class="headerlink" href="#auxillary-functions" title="Permalink to this headline">¶</a></h2>
-<p>The following topics are beyond the scope this CORE manual and are described elsewhere.</p>
+<div class="section" id="auxillary-processes">
+<h2>Auxillary processes<a class="headerlink" href="#auxillary-processes" title="Permalink to this headline">¶</a></h2>
+<p>The following topics are beyond the scope this CORE manual because they describe systems exclusive to the USGS. These topics will be described elsewhere.</p>
 <ul class="simple">
-<li>USGS event page integration</li>
+<li>USGS Event Page integration</li>
+<li>USGS Product Distribution Layer, or <cite>PDL &lt;https://usgs.github.io/pdl/&gt;</cite></li>
 <li>Event triggering</li>
 <li>Implementation of the questionnaire</li>
 <li>Transfer of user data to the backend servers</li>
@@ -216,17 +217,17 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Implementation Guide</a><ul>
+<li><a class="reference internal" href="#system-flowchart">System flowchart</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#additional-dependencies">Additional dependencies</a></li>
 <li><a class="reference internal" href="#configuration-file">Configuration file</a></li>
-<li><a class="reference internal" href="#the-dyfi-database">The DYFI database</a><ul>
+<li><a class="reference internal" href="#database-implementation">Database implementation</a><ul>
 <li><a class="reference internal" href="#event-table">Event table</a></li>
 <li><a class="reference internal" href="#extended-tables">Extended tables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#generation-of-map-products">Generation of map products</a></li>
-<li><a class="reference internal" href="#creation-of-static-images">Creation of static images</a></li>
-<li><a class="reference internal" href="#auxillary-functions">Auxillary functions</a></li>
+<li><a class="reference internal" href="#generation-of-dynamic-and-static-image-maps">Generation of dynamic and static image maps</a></li>
+<li><a class="reference internal" href="#auxillary-processes">Auxillary processes</a></li>
 </ul>
 </li>
 </ul>

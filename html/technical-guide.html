@@ -24,7 +24,6 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Implementation Guide" href="implementation-guide.html" />
-    <link rel="prev" title="Scientific Guide" href="scientific-guide.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,20 +41,18 @@
             
   <div class="section" id="technical-guide">
 <h1>Technical Guide<a class="headerlink" href="#technical-guide" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="system-flowchart">
-<h2>System flowchart<a class="headerlink" href="#system-flowchart" title="Permalink to this headline">¶</a></h2>
-<p>The following diagram shows the ideal configuration for the DYFI system, including adjunct systems for data input and output. This CORE manual only concerns itself with the functionality of the backend server.</p>
-<p>Note the two independent inputs to the DYFI system: event triggers (which include earthquake origin information) and user responses (which may or may not be event-aware).</p>
-<img alt="_images/diagram_systems.svg" src="_images/diagram_systems.svg" /><p>The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the <a class="reference internal" href="modules.html"><span class="doc">Module List</span></a>.</p>
+<div class="section" id="process-flowchart">
+<h2>Process flowchart<a class="headerlink" href="#process-flowchart" title="Permalink to this headline">¶</a></h2>
+<p>The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the <a class="reference internal" href="modules.html"><span class="doc">Module List</span></a>.</p>
 <img alt="_images/diagram_flowchart.svg" src="_images/diagram_flowchart.svg" /><div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In the above diagrams, items shown in red contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.</p>
 </div>
 </div>
-<div class="section" id="database-operations">
-<h2>Database operations<a class="headerlink" href="#database-operations" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="event-table">
-<h3>Event table<a class="headerlink" href="#event-table" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-streams">
+<h2>Input streams<a class="headerlink" href="#input-streams" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="earthquake-events">
+<h3>Earthquake events<a class="headerlink" href="#earthquake-events" title="Permalink to this headline">¶</a></h3>
 <p>The event data is described below.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -156,8 +153,8 @@ first event ID to be archived in case the event ID is manually changed.</p>
 <p class="last">Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.</p>
 </div>
 </div>
-<div class="section" id="extended-tables">
-<h3>Extended tables<a class="headerlink" href="#extended-tables" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="user-responses">
+<h3>User responses<a class="headerlink" href="#user-responses" title="Permalink to this headline">¶</a></h3>
 <p>The extended table data is described below.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -343,21 +340,20 @@ first event ID to be archived in case the event ID is manually changed.</p>
 </div>
 </div>
 </div>
-<div class="section" id="input-streams">
-<h2>Input streams<a class="headerlink" href="#input-streams" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="utm-based-aggregation">
 <h2>UTM-based Aggregation<a class="headerlink" href="#utm-based-aggregation" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="creating-dynamic-products">
-<h2>Creating dynamic products<a class="headerlink" href="#creating-dynamic-products" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="creating-static-products">
-<h2>Creating static products<a class="headerlink" href="#creating-static-products" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dyfi-products">
+<h2>DYFI products<a class="headerlink" href="#dyfi-products" title="Permalink to this headline">¶</a></h2>
+<p>The DYFI ‘signature product’ is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the <code class="xref py py-obj docutils literal"><span class="pre">Product</span> <span class="pre">Guide</span></code>).</p>
+<p>The USGS Web Pages use the <cite>Leaflet</cite> rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as <cite>OpenLayers</cite>, or a GIS application.</p>
 <p>For the creation of static images, see the <span class="xref std std-doc">Implementation Guide</span>.</p>
 </div>
 <div class="section" id="exporting-to-the-web">
 <h2>Exporting to the web<a class="headerlink" href="#exporting-to-the-web" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="contents-xml">
+<h3>contents.xml<a class="headerlink" href="#contents-xml" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -370,17 +366,18 @@ first event ID to be archived in case the event ID is manually changed.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Technical Guide</a><ul>
-<li><a class="reference internal" href="#system-flowchart">System flowchart</a></li>
-<li><a class="reference internal" href="#database-operations">Database operations</a><ul>
-<li><a class="reference internal" href="#event-table">Event table</a></li>
-<li><a class="reference internal" href="#extended-tables">Extended tables</a></li>
+<li><a class="reference internal" href="#process-flowchart">Process flowchart</a></li>
+<li><a class="reference internal" href="#input-streams">Input streams</a><ul>
+<li><a class="reference internal" href="#earthquake-events">Earthquake events</a></li>
+<li><a class="reference internal" href="#user-responses">User responses</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#input-streams">Input streams</a></li>
 <li><a class="reference internal" href="#utm-based-aggregation">UTM-based Aggregation</a></li>
-<li><a class="reference internal" href="#creating-dynamic-products">Creating dynamic products</a></li>
-<li><a class="reference internal" href="#creating-static-products">Creating static products</a></li>
-<li><a class="reference internal" href="#exporting-to-the-web">Exporting to the web</a></li>
+<li><a class="reference internal" href="#dyfi-products">DYFI products</a></li>
+<li><a class="reference internal" href="#exporting-to-the-web">Exporting to the web</a><ul>
+<li><a class="reference internal" href="#contents-xml">contents.xml</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -388,7 +385,6 @@ first event ID to be archived in case the event ID is manually changed.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="scientific-guide.html" title="previous chapter">Scientific Guide</a></li>
       <li>Next: <a href="implementation-guide.html" title="next chapter">Implementation Guide</a></li>
   </ul></li>
 </ul>
