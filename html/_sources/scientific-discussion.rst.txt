@@ -3,16 +3,13 @@ Scientific Discussion
 
 A stub for the Scientific Discussion.
 
-Flowchart
-=========
-
-
 Aggregation
 ===========
 
 Intensity calculation
 =====================
 
+For an in-depth look at the intensity calculation, see `Validation`.
 
 Filtering of entries
 ====================

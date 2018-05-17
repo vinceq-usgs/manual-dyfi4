@@ -267,7 +267,7 @@ ANNALS OF GEOPHYSICS, 54, 6, 2011; doi: 10.4401/ag-5354</div></blockquote>
 </div>
 <div class="section" id="test-6-multiple-entries-with-unanswered-indices">
 <h2>Test 6. Multiple entries with unanswered indices<a class="headerlink" href="#test-6-multiple-entries-with-unanswered-indices" title="Permalink to this headline">¶</a></h2>
-<p>When an entry does not have a value for an index (i.e., the user did not answer that particular question on the questionnaire), then that questionnaire is not counted for that particular index.</p>
+<p>When an entry does not have a value for an index (the user did not answer that particular portion of the questionnaire, i.e. a “null response”), then that questionnaire is not counted for that particular index.</p>
 <p>In the following example, the first entry does not have a ‘reaction’ value. Therefore, during aggregation, the reaction index only counts the value for the second entry.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">entry_1</span><span class="o">=</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;felt&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry_2</span><span class="o">=</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;felt&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;reaction&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">})</span>
@@ -279,6 +279,28 @@ ANNALS OF GEOPHYSICS, 54, 6, 2011; doi: 10.4401/ag-5354</div></blockquote>
 <span class="go">10.0</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="test-7-null-response-vs-no-response">
+<h2>Test 7. Null response vs no response<a class="headerlink" href="#test-7-null-response-vs-no-response" title="Permalink to this headline">¶</a></h2>
+<p>To show the difference between a null response and a “No” response, we set up the following example: 9 entries with ‘reaction’ indices set to null,  and one entry with a ‘reaction’ index of 1.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;reaction&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;reaction&#39;</span><span class="p">:</span><span class="kc">None</span><span class="p">}))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdi</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span><span class="n">cwsOnly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>We then set up a different set of 9 entries with ‘reaction’ indices set to 0, and one entry set to 1.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">=</span><span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;reaction&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Entry</span><span class="p">({</span><span class="s1">&#39;reaction&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdi</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span><span class="n">cwsOnly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">0.1</span>
+</pre></div>
+</div>
+<p>In the first case, the responses with null values don’t count in the computation, so only the first response (with positive reaction) counts. In the second case, the responses with zero values have the same weight as the one with a positive value.</p>
 </div>
 <div class="section" id="test-7-comparison-with-dyfi-version-3">
 <h2>Test 7. Comparison with DYFI Version 3<a class="headerlink" href="#test-7-comparison-with-dyfi-version-3" title="Permalink to this headline">¶</a></h2>
@@ -343,6 +365,7 @@ ANNALS OF GEOPHYSICS, 54, 6, 2011; doi: 10.4401/ag-5354</div></blockquote>
 <li><a class="reference internal" href="#test-4-the-damage-index">Test 4. The ‘damage’ index</a></li>
 <li><a class="reference internal" href="#test-5-multiple-entries">Test 5. Multiple entries</a></li>
 <li><a class="reference internal" href="#test-6-multiple-entries-with-unanswered-indices">Test 6. Multiple entries with unanswered indices</a></li>
+<li><a class="reference internal" href="#test-7-null-response-vs-no-response">Test 7. Null response vs no response</a></li>
 <li><a class="reference internal" href="#test-7-comparison-with-dyfi-version-3">Test 7. Comparison with DYFI Version 3</a></li>
 </ul>
 </li>

@@ -10,7 +10,7 @@ The following diagram shows the flowchart for the creation of DYFI products. Obj
 
 .. note::
 
-    In the above diagrams, items shown in red contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.
+    In the above diagrams, items shown in **red** contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.
 
 
 Input streams
@@ -18,6 +18,8 @@ Input streams
 
 Earthquake events
 .................
+
+TODO
 
 The event data is described below.
 
@@ -65,8 +67,11 @@ The column *invisible* is set to true when an event is no longer valid, and DYFI
 
     Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
 
+
 User responses
 .................
+
+TODO
 
 The extended table data is described below.
 
@@ -149,10 +154,6 @@ The column *user_cdi* is the value computed by the form the user's intensity (on
     Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.
 
 
-UTM-based Aggregation
----------------------
-
-
 DYFI products
 -------------------------
 
@@ -162,10 +163,4 @@ The USGS Web Pages use the `Leaflet` rendering engine to display the maps, along
 
 For the creation of static images, see the :doc:`Implementation Guide <Creation of static images>`.
 
-
-Exporting to the web
---------------------
-
-contents.xml
-............
 
