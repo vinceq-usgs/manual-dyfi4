@@ -93,7 +93,9 @@ Table name   *event*
 
 This table holds data for individual earthquake events; most importantly, event earthquake location and time. Each row corresponds to one event.
 
-This table is normally populated by event information from the USGS Comprehensive Earthquake Catalog, or ComCat (https://earthquake.usgs.gov/data/comcat/). This table holds data information for individual earthquake events. A sample table is included (beginning from 2015). 
+This table is normally populated by event information from the USGS Comprehensive Earthquake Catalog, or ComCat (https://earthquake.usgs.gov/data/comcat/). This table holds data information for individual earthquake events. 
+
+A sample table is included (beginning from 2015). 
 
 Extended tables
 +++++++++++++++
@@ -129,7 +131,7 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 5. `PhantomJS` is run on the HTML page. This renders the HTML into a static PNG file.
 
-Auxillary processes
+Auxiliary processes
 --------------------
 
 The following topics are beyond the scope this CORE manual because they describe systems exclusive to the USGS. These topics will be described elsewhere.

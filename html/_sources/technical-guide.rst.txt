@@ -56,12 +56,12 @@ good_id                obsolete
 
 All columns are Sqlite text fields.
 
-The column *newresponses* is updated by the backend whenever a new user response is processed, and is reset to zero whenever the :obj:`rundyfi.py` runs. This is how the backend knows when :obj:`rundyfi.py` should be triggered.
+* *newresponses* is updated by the backend whenever a new user response is processed, and is reset to zero whenever the :obj:`rundyfi.py` runs. This is how the backend knows when :obj:`rundyfi.py` should be triggered.
 
-The column *orig_id* is initially the same as *eventid*. This allows the
+* *orig_id* is initially the same as *eventid*. This allows the
 first event ID to be archived in case the event ID is manually changed.
 
-The column *invisible* is set to true when an event is no longer valid, and DYFI products are no longer applicable. Examples are bogus, duplicate, or non-authoritative events. These events will not be exported, and responses will not be automatically associated to them. (They may still be run manually.)
+* *invisible* is set to true when an event is no longer valid, and DYFI products are no longer applicable. Examples are bogus, duplicate, or non-authoritative events. These events will not be exported, and responses will not be automatically associated to them. (They may still be run manually.)
 
 .. note::
 
@@ -78,7 +78,7 @@ The extended table data is described below.
 =====================  =========================================================================
 Column                 Description
 ---------------------  -------------------------------------------------------------------------
-subid                  Integer type unique primary key for each row
+subid                  (Integer) unique primary key for each row
 eventid                Event ID that this response is associated to
 orig_id                Original event ID when response was processed
 suspect                Flag for responses that are bogus or outliers
@@ -135,19 +135,19 @@ cityid                 obsolete
 
 All columns are Sqlite text fields unless indicated otherwise.
 
-The column *orig_id* is initially the same as *eventid*. For responses that were not originally attached to an event ("unassociated entries"), both fields would have the value "unknown". This allows the original data to be archived in case the this entry is associated or manually updated.
+* *orig_id* is initially copied from *eventid*. For responses that were not originally attached to an event ("unassociated entries"), both fields would have the value "unknown". When this entry is associated to an event or updated to a different ID, this field will show the original value.
 
-The column *suspect* is set automatically by the :py:obj:`Entry` module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.
+* *suspect* is set automatically by the :py:obj:`Entry` module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.
 
-The column *time_now* is set by the DYFI Felt Report submit function. This is the time used for associating entries.
+* *time_now* is set by the DYFI Felt Report submit function. This is the time used for associating entries.
 
-The column *usertime* is filled in by the user. It is not automatically parsed; it is for the operator's information only.
+* *usertime* is filled in by the user. It is not automatically parsed; it is for the operator's information only.
 
-The columns *latitude* and *longitude* are automatically filled in by the geocoding function of they DYFI Felt Report.
+* *latitude* and *longitude* are automatically filled in by the geocoding function of they DYFI Felt Report.
 
-The column *confidence* is an estimate from the geocoding function of the precision of the latitude and longitude output. See `Geocoding` for details.
+* *confidence* is an estimate from the geocoding function of the precision of the latitude and longitude output. See `Geocoding` for details.
 
-The column *user_cdi* is the value computed by the form the user's intensity (only), with no aggregation. It is a quick way to look for outlier entries, but it is not used in DYFI computation.
+* *user_cdi* is the value computed by the form the user's intensity (only), with no aggregation. It is a quick way to look for outlier entries, but it is not used in DYFI computation.
 
 .. note::
 
@@ -157,7 +157,7 @@ The column *user_cdi* is the value computed by the form the user's intensity (on
 DYFI products
 -------------------------
 
-The DYFI 'signature product' is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the :obj:`Product Guide`).
+The DYFI 'signature product' is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and the corresponding intensities for each area (see the :obj:`Product Guide`).
 
 The USGS Web Pages use the `Leaflet` rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as `OpenLayers`, or a GIS application.
 

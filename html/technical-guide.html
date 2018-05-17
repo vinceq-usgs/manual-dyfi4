@@ -146,10 +146,14 @@
 </tbody>
 </table>
 <p>All columns are Sqlite text fields.</p>
-<p>The column <em>newresponses</em> is updated by the backend whenever a new user response is processed, and is reset to zero whenever the <code class="xref py py-obj docutils literal"><span class="pre">rundyfi.py</span></code> runs. This is how the backend knows when <code class="xref py py-obj docutils literal"><span class="pre">rundyfi.py</span></code> should be triggered.</p>
-<p>The column <em>orig_id</em> is initially the same as <em>eventid</em>. This allows the
-first event ID to be archived in case the event ID is manually changed.</p>
-<p>The column <em>invisible</em> is set to true when an event is no longer valid, and DYFI products are no longer applicable. Examples are bogus, duplicate, or non-authoritative events. These events will not be exported, and responses will not be automatically associated to them. (They may still be run manually.)</p>
+<ul class="simple">
+<li><em>newresponses</em> is updated by the backend whenever a new user response is processed, and is reset to zero whenever the <code class="xref py py-obj docutils literal"><span class="pre">rundyfi.py</span></code> runs. This is how the backend knows when <code class="xref py py-obj docutils literal"><span class="pre">rundyfi.py</span></code> should be triggered.</li>
+<li><em>orig_id</em> is initially the same as <em>eventid</em>. This allows the</li>
+</ul>
+<p>first event ID to be archived in case the event ID is manually changed.</p>
+<ul class="simple">
+<li><em>invisible</em> is set to true when an event is no longer valid, and DYFI products are no longer applicable. Examples are bogus, duplicate, or non-authoritative events. These events will not be exported, and responses will not be automatically associated to them. (They may still be run manually.)</li>
+</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.</p>
@@ -169,7 +173,7 @@ first event ID to be archived in case the event ID is manually changed.</p>
 <td>Description</td>
 </tr>
 <tr class="row-even"><td>subid</td>
-<td>Integer type unique primary key for each row</td>
+<td>(Integer) unique primary key for each row</td>
 </tr>
 <tr class="row-odd"><td>eventid</td>
 <td>Event ID that this response is associated to</td>
@@ -330,13 +334,15 @@ first event ID to be archived in case the event ID is manually changed.</p>
 </tbody>
 </table>
 <p>All columns are Sqlite text fields unless indicated otherwise.</p>
-<p>The column <em>orig_id</em> is initially the same as <em>eventid</em>. For responses that were not originally attached to an event (“unassociated entries”), both fields would have the value “unknown”. This allows the original data to be archived in case the this entry is associated or manually updated.</p>
-<p>The column <em>suspect</em> is set automatically by the <code class="xref py py-obj docutils literal"><span class="pre">Entry</span></code> module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.</p>
-<p>The column <em>time_now</em> is set by the DYFI Felt Report submit function. This is the time used for associating entries.</p>
-<p>The column <em>usertime</em> is filled in by the user. It is not automatically parsed; it is for the operator’s information only.</p>
-<p>The columns <em>latitude</em> and <em>longitude</em> are automatically filled in by the geocoding function of they DYFI Felt Report.</p>
-<p>The column <em>confidence</em> is an estimate from the geocoding function of the precision of the latitude and longitude output. See <cite>Geocoding</cite> for details.</p>
-<p>The column <em>user_cdi</em> is the value computed by the form the user’s intensity (only), with no aggregation. It is a quick way to look for outlier entries, but it is not used in DYFI computation.</p>
+<ul class="simple">
+<li><em>orig_id</em> is initially copied from <em>eventid</em>. For responses that were not originally attached to an event (“unassociated entries”), both fields would have the value “unknown”. When this entry is associated to an event or updated to a different ID, this field will show the original value.</li>
+<li><em>suspect</em> is set automatically by the <code class="xref py py-obj docutils literal"><span class="pre">Entry</span></code> module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.</li>
+<li><em>time_now</em> is set by the DYFI Felt Report submit function. This is the time used for associating entries.</li>
+<li><em>usertime</em> is filled in by the user. It is not automatically parsed; it is for the operator’s information only.</li>
+<li><em>latitude</em> and <em>longitude</em> are automatically filled in by the geocoding function of they DYFI Felt Report.</li>
+<li><em>confidence</em> is an estimate from the geocoding function of the precision of the latitude and longitude output. See <cite>Geocoding</cite> for details.</li>
+<li><em>user_cdi</em> is the value computed by the form the user’s intensity (only), with no aggregation. It is a quick way to look for outlier entries, but it is not used in DYFI computation.</li>
+</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Obsolete columns are for compatibility with DYFI3 only. They will be removed in a future release.</p>
@@ -345,7 +351,7 @@ first event ID to be archived in case the event ID is manually changed.</p>
 </div>
 <div class="section" id="dyfi-products">
 <h2>DYFI products<a class="headerlink" href="#dyfi-products" title="Permalink to this headline">¶</a></h2>
-<p>The DYFI ‘signature product’ is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and corresponding intensities (see the <code class="xref py py-obj docutils literal"><span class="pre">Product</span> <span class="pre">Guide</span></code>).</p>
+<p>The DYFI ‘signature product’ is no longer a static image but a GeoJSON file. This file contains the aggregated data as GeoJSON Features with coordinates for plotting and the corresponding intensities for each area (see the <code class="xref py py-obj docutils literal"><span class="pre">Product</span> <span class="pre">Guide</span></code>).</p>
 <p>The USGS Web Pages use the <cite>Leaflet</cite> rendering engine to display the maps, along with a suitable basemap. Users may use other rendering engines, such as <cite>OpenLayers</cite>, or a GIS application.</p>
 <p>For the creation of static images, see the <span class="xref std std-doc">Implementation Guide</span>.</p>
 </div>
