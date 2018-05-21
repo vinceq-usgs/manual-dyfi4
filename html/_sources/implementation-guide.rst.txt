@@ -123,17 +123,17 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 1. The :ref:`Aggregate <dyfi.aggregate>` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
 
-2. The :ref:`Map <dyfi.map>` class adds the event data (epicentral location and magnitude).
+2. The :ref:`Map <dyfi.map.Map>` class adds the event data (epicentral location and magnitude).
 
-3. The :ref:`Map.toImage <dyfi.map.toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
+3. The :ref:`Map.toImage <dyfi.map.Map.toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
 
-4. :ref:`toImage <dyfi.map.toImage>` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
+4. :ref:`Map.toImage <dyfi.map.Map.toImage>` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
 
 5. The :file:`leaflet/capture.js` script takes uses the file :file:`leaflet/viewer.html.template` as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.
 
 6. :file:`leaflet/capture.js` calls :program:`PhantomJS` on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).
 
-7. :ref:`MaptoImage` moves the temporary output into the correct event ID's :file:`data` directory.
+7. :ref:`Map.toImage <dyfi.map.Map.toImage>` moves the temporary output into the correct event ID's :file:`data` directory.
 
 .. note::
 
