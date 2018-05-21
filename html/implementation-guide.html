@@ -126,19 +126,19 @@
 <li><em>db:</em> This describes the location and type of the DYFI database (see below).</li>
 <li><em>directories:</em> This has links to the data directories.<ul>
 <li><em>data:</em> This points to the output directories. The DYFI4 products for each event ID are stored here, under its own event ID subdirectory.</li>
-<li><em>leaflet:</em> This points to the directory where Leaflet processing is done. See <code class="xref py py-obj docutils literal"><span class="pre">Generation</span> <span class="pre">of</span> <span class="pre">map</span> <span class="pre">products</span></code>.</li>
+<li><em>leaflet:</em> This points to the directory where Leaflet processing is done. See <span class="xref std std-ref">Generation of map products</span>.</li>
 </ul>
 </li>
-<li><em>executables:</em> This lists various external programs used by DYFI. The <em>screenshot</em> line is used to call <cite>PhantomJS</cite> (see <a class="reference internal" href="#generation-of-dynamic-and-static-image-maps"><span class="std std-ref">Generation of dynamic and static image maps</span></a>).</li>
-<li><em>products:</em></li>
-<li><em>filter:</em> This holds settings for filtering entries (to reject bogus or suspect ones). See <code class="xref py py-obj docutils literal"><span class="pre">Filtering</span> <span class="pre">of</span> <span class="pre">entries</span></code>.</li>
+<li><em>executables:</em> This lists various external programs used by DYFI. The <em>screenshot</em> line is used to call <cite>PhantomJS</cite> (see <a class="reference internal" href="#generation-of-dynamic-and-static-image-maps"><span class="std std-ref">Generation of dynamic and static image maps</span></a>). Do not change this unless you are modifying the static image generation process.</li>
+<li><em>products:</em> This is a link to <code class="file docutils literal"><span class="pre">lib/products.yml</span></code> which lists the supported output types and formats. The DYFI process iterates through this file to create its output products.</li>
+<li><em>filter:</em> This holds settings for filtering entries (to reject bogus or suspect ones). See <a class="reference internal" href="scientific-discussion.html#filtering-of-entries"><span class="std std-ref">Filtering of entries</span></a>.</li>
 </ul>
 </div>
 <div class="section" id="database-implementation">
 <h2>Database implementation<a class="headerlink" href="#database-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in <em>/tests/db/</em>.</p>
 <p>We recommend that the tables be placed in a directory such as <em>/db/</em>. To change the database location, modify the settings for each database file in <code class="file docutils literal"><span class="pre">config.yml</span></code> file under <em>db:files</em>. Each table is a separate file.</p>
-<p>For details on the various database tables see <a class="reference internal" href="technical-guide.html#technical-guide"><span class="std std-ref">Technical Guide</span></a> under <a class="reference internal" href="technical-guide.html#input-streams"><span class="std std-ref">Input streams</span></a>.</p>
+<p>For details on the various database tables see <a class="reference internal" href="technical-guide.html#input-streams"><span class="std std-ref">Input streams</span></a>.</p>
 <div class="section" id="event-table">
 <h3>Event table<a class="headerlink" href="#event-table" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -188,13 +188,13 @@
 </div>
 <p>DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.</p>
 <ol class="arabic simple">
-<li>The <code class="xref py py-obj docutils literal"><span class="pre">Aggregate</span></code> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
-<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map</span></code> class adds the event data (epicentral location and magnitude).</li>
-<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
-<li><code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>
+<li>The <span class="xref std std-ref">Aggregate</span> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
+<li>The <span class="xref std std-ref">Map</span> class adds the event data (epicentral location and magnitude).</li>
+<li>The <span class="xref std std-ref">Map.toImage</span> saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
+<li><span class="xref std std-ref">Map.toImage</span> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>
 <li>The <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> script takes uses the file <code class="file docutils literal"><span class="pre">leaflet/viewer.html.template</span></code> as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.</li>
 <li><code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> calls <cite>PhantomJS</cite> on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).</li>
-<li><code class="xref py py-obj docutils literal"><span class="pre">MaptoImage</span></code> moves the temporary output into the correct event ID’s <code class="file docutils literal"><span class="pre">data</span></code> directory.</li>
+<li><span class="xref std std-ref">MaptoImage</span> moves the temporary output into the correct event ID’s <code class="file docutils literal"><span class="pre">data</span></code> directory.</li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
