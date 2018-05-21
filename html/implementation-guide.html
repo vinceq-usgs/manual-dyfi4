@@ -112,7 +112,7 @@
 <div class="section" id="additional-dependencies">
 <h2>Additional dependencies<a class="headerlink" href="#additional-dependencies" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>PhantomJS &lt;<a class="reference external" href="http://phantomjs.org/">http://phantomjs.org/</a>) renders maps into static images (PNG). Normally, the <code class="file docutils literal"><span class="pre">install.sh</span></code> script installs this via <cite>conda</cite>.</li>
+<li>PhantomJS (<a class="reference external" href="http://phantomjs.org/">http://phantomjs.org/</a>) renders maps into static images (PNG). Normally, the <code class="file docutils literal"><span class="pre">install.sh</span></code> script installs this via <cite>conda</cite>.</li>
 <li>Leaflet (<a class="reference external" href="http://leafletjs.com">http://leafletjs.com</a>) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the <cite>leaflet/inc</cite> directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the <cite>leaflet/viewer.html</cite> file for an example of invoking Leaflet via CDN.)</li>
 <li>utm (<a class="reference external" href="https://pypi.python.org/pypi/utm">https://pypi.python.org/pypi/utm</a>) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory <cite>dyfi/thirdparty/utm</cite>.</li>
 </ul>
@@ -129,7 +129,7 @@
 <li><em>leaflet:</em> This points to the directory where Leaflet processing is done. See <code class="xref py py-obj docutils literal"><span class="pre">Generation</span> <span class="pre">of</span> <span class="pre">map</span> <span class="pre">products</span></code>.</li>
 </ul>
 </li>
-<li><em>executables:</em></li>
+<li><em>executables:</em> This lists various external programs used by DYFI. The <em>screenshot</em> line is used to call <cite>PhantomJS</cite> (see <a class="reference internal" href="#generation-of-dynamic-and-static-image-maps"><span class="std std-ref">Generation of dynamic and static image maps</span></a>).</li>
 <li><em>products:</em></li>
 <li><em>filter:</em> This holds settings for filtering entries (to reject bogus or suspect ones). See <code class="xref py py-obj docutils literal"><span class="pre">Filtering</span> <span class="pre">of</span> <span class="pre">entries</span></code>.</li>
 </ul>
@@ -138,7 +138,7 @@
 <h2>Database implementation<a class="headerlink" href="#database-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in <em>/tests/db/</em>.</p>
 <p>We recommend that the tables be placed in a directory such as <em>/db/</em>. To change the database location, modify the settings for each database file in <code class="file docutils literal"><span class="pre">config.yml</span></code> file under <em>db:files</em>. Each table is a separate file.</p>
-<p>For details on the various database tables see <span class="xref std std-doc">Technical Guide</span> under <span class="xref std std-doc">Database operations</span>.</p>
+<p>For details on the various database tables see <a class="reference internal" href="technical-guide.html#technical-guide"><span class="std std-ref">Technical Guide</span></a> under <span class="xref std std-ref">Database operations</span>.</p>
 <div class="section" id="event-table">
 <h3>Event table<a class="headerlink" href="#event-table" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -203,7 +203,7 @@
 <p>The following topics are beyond the scope this CORE manual because they describe systems exclusive to the USGS. These topics will be described elsewhere.</p>
 <ul class="simple">
 <li>USGS Event Page integration</li>
-<li>USGS Product Distribution Layer, or <cite>PDL &lt;https://usgs.github.io/pdl/&gt;</cite></li>
+<li>USGS Product Distribution Layer, or PDL (<a class="reference external" href="https://usgs.github.io/pdl/">https://usgs.github.io/pdl/</a>)</li>
 <li>Event triggering</li>
 <li>Implementation of the questionnaire</li>
 <li>Transfer of user data to the backend servers</li>

@@ -45,7 +45,7 @@ sqlite               Implements the DYFI database
 Additional dependencies
 -----------------------
 
-- PhantomJS <http://phantomjs.org/) renders maps into static images (PNG). Normally, the :file:`install.sh` script installs this via `conda`.
+- PhantomJS (http://phantomjs.org/) renders maps into static images (PNG). Normally, the :file:`install.sh` script installs this via `conda`.
 
 - Leaflet (http://leafletjs.com) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the `leaflet/inc` directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the `leaflet/viewer.html` file for an example of invoking Leaflet via CDN.)
 
@@ -68,7 +68,7 @@ The file has five sections:
 
   - *leaflet:* This points to the directory where Leaflet processing is done. See :obj:`Generation of map products`.
 
-- *executables:*
+- *executables:* This lists various external programs used by DYFI. The *screenshot* line is used to call `PhantomJS` (see :ref:`Generation of dynamic and static image maps`).
 
 - *products:* 
 
@@ -81,7 +81,7 @@ The DYFI database is currently implemented as a Sqlite3 database. A sample set o
 
 We recommend that the tables be placed in a directory such as */db/*. To change the database location, modify the settings for each database file in :file:`config.yml` file under *db:files*. Each table is a separate file.
 
-For details on the various database tables see :doc:`Technical Guide` under :doc:`Database operations`. 
+For details on the various database tables see :ref:`Technical Guide` under :ref:`Database operations`. 
 
 Event table
 +++++++++++
@@ -146,7 +146,7 @@ The following topics are beyond the scope this CORE manual because they describe
 
 - USGS Event Page integration
 
-- USGS Product Distribution Layer, or `PDL <https://usgs.github.io/pdl/>`
+- USGS Product Distribution Layer, or PDL (https://usgs.github.io/pdl/)
 
 - Event triggering
 
