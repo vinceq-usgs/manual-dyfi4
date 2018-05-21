@@ -123,7 +123,7 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 1. The :ref:`Aggregate <dyfi.aggregate>` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
 
-2. The :ref:`Map <dyfi.map.Map>` class adds the event data (epicentral location and magnitude).
+2. The :ref:`Map <dyfi.map>` class adds the event data (epicentral location and magnitude).
 
 3. The :ref:`Map.toImage <dyfi.map.Map.toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
 
