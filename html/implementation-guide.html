@@ -138,7 +138,7 @@
 <h2>Database implementation<a class="headerlink" href="#database-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The DYFI database is currently implemented as a Sqlite3 database. A sample set of databases is included with installation in <em>/tests/db/</em>.</p>
 <p>We recommend that the tables be placed in a directory such as <em>/db/</em>. To change the database location, modify the settings for each database file in <code class="file docutils literal"><span class="pre">config.yml</span></code> file under <em>db:files</em>. Each table is a separate file.</p>
-<p>For details on the various database tables see <a class="reference internal" href="technical-guide.html#technical-guide"><span class="std std-ref">Technical Guide</span></a> under <span class="xref std std-ref">Database operations</span>.</p>
+<p>For details on the various database tables see <a class="reference internal" href="technical-guide.html#technical-guide"><span class="std std-ref">Technical Guide</span></a> under <a class="reference internal" href="technical-guide.html#input-streams"><span class="std std-ref">Input streams</span></a>.</p>
 <div class="section" id="event-table">
 <h3>Event table<a class="headerlink" href="#event-table" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -196,7 +196,10 @@
 <li><code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> calls <cite>PhantomJS</cite> on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).</li>
 <li><code class="xref py py-obj docutils literal"><span class="pre">MaptoImage</span></code> moves the temporary output into the correct event ID’s <code class="file docutils literal"><span class="pre">data</span></code> directory.</li>
 </ol>
-<p>Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.</p>
+</div>
 </div>
 <div class="section" id="auxiliary-processes">
 <h2>Auxiliary processes<a class="headerlink" href="#auxiliary-processes" title="Permalink to this headline">¶</a></h2>

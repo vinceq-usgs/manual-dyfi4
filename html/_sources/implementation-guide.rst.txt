@@ -81,7 +81,7 @@ The DYFI database is currently implemented as a Sqlite3 database. A sample set o
 
 We recommend that the tables be placed in a directory such as */db/*. To change the database location, modify the settings for each database file in :file:`config.yml` file under *db:files*. Each table is a separate file.
 
-For details on the various database tables see :ref:`Technical Guide` under :ref:`Database operations`. 
+For details on the various database tables see :ref:`Technical Guide` under :ref:`Input streams`. 
 
 Event table
 +++++++++++
@@ -137,7 +137,7 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 .. note::
 
-Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.
+    Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.
 
 Auxiliary processes
 --------------------
