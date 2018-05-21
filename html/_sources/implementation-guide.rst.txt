@@ -127,13 +127,13 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 3. The :py:func:`Map.toImage <toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
 
-4. :py:func:`toImage` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
+4. :py:func:`Map.toImage <toImage>` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
 
 5. The :file:`leaflet/capture.js` script takes uses the file :file:`leaflet/viewer.html.template` as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.
 
 6. :file:`leaflet/capture.js` calls :program:`PhantomJS` on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).
 
-7. :ref:`toImage` moves the temporary output into the correct event ID's :file:`data` directory.
+7. :py:func:`Map.toImage <toImage>` moves the temporary output into the correct event ID's :file:`data` directory.
 
 .. note::
 
