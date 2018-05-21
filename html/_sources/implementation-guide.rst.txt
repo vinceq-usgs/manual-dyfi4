@@ -125,7 +125,7 @@ DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section 
 
 2. The :ref:`Map <dyfi.map>` class adds the event data (epicentral location and magnitude).
 
-3. The :ref:`Map.toImage <dyfi.map.map.toimage()>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
+3. The :py:func:`Map.toImage <toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
 
 4. :py:func:`toImage` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
 
