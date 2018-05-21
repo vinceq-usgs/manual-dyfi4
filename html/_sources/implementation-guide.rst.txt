@@ -45,11 +45,11 @@ sqlite               Implements the DYFI database
 Additional dependencies
 -----------------------
 
-- PhantomJS (http://phantomjs.org/) renders maps into static images (PNG). Normally, the :file:`install.sh` script installs this via `conda`.
+- **PhantomJS** (http://phantomjs.org/) renders maps into static images (PNG). Normally, the :file:`install.sh` script installs this via `conda`.
 
-- Leaflet (http://leafletjs.com) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the `leaflet/inc` directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the `leaflet/viewer.html` file for an example of invoking Leaflet via CDN.)
+- **Leaflet** (http://leafletjs.com) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the `leaflet/inc` directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the `leaflet/viewer.html` file for an example of invoking Leaflet via CDN.)
 
-- utm (https://pypi.python.org/pypi/utm) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory `dyfi/thirdparty/utm`.
+- **utm** (https://pypi.python.org/pypi/utm) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory `dyfi/thirdparty/utm`.
 
 Configuration file
 ------------------
@@ -117,27 +117,27 @@ Generation of dynamic and static image maps
 
 .. note::
 
-    The `PhantomJS` package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.
+    The :program:`PhantomJS` package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.
 
 DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.
 
 1. The :ref:`Aggregate <dyfi.aggregate>` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
 
-2. The :ref:`Map` class adds the event data (epicentral location and magnitude).
+2. The :ref:`Map <dyfi.map>` class adds the event data (epicentral location and magnitude).
 
-3. The :ref:`Map.toImage` saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
+3. The :ref:`Map.toImage <dyfi.map.toImage>` method saves the GeoJSON data into a temporary JavaScript file in the :file:`leaflet` directory. It also creates a temporary filename for the output (PNG) image.
 
-4. :ref:`Map.toImage` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
+4. :ref:`toImage <dyfi.map.toImage>` calls the script :file:`leaflet/capture.js` and the temporary datafile as arguments. 
 
 5. The :file:`leaflet/capture.js` script takes uses the file :file:`leaflet/viewer.html.template` as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.
 
-6. :file:`leaflet/capture.js` calls `PhantomJS` on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).
+6. :file:`leaflet/capture.js` calls :program:`PhantomJS` on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).
 
 7. :ref:`MaptoImage` moves the temporary output into the correct event ID's :file:`data` directory.
 
 .. note::
 
-    Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.
+    Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with :program:`PhantomJS`.
 
 Auxiliary processes
 --------------------

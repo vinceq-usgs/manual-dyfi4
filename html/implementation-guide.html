@@ -112,9 +112,9 @@
 <div class="section" id="additional-dependencies">
 <h2>Additional dependencies<a class="headerlink" href="#additional-dependencies" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>PhantomJS (<a class="reference external" href="http://phantomjs.org/">http://phantomjs.org/</a>) renders maps into static images (PNG). Normally, the <code class="file docutils literal"><span class="pre">install.sh</span></code> script installs this via <cite>conda</cite>.</li>
-<li>Leaflet (<a class="reference external" href="http://leafletjs.com">http://leafletjs.com</a>) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the <cite>leaflet/inc</cite> directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the <cite>leaflet/viewer.html</cite> file for an example of invoking Leaflet via CDN.)</li>
-<li>utm (<a class="reference external" href="https://pypi.python.org/pypi/utm">https://pypi.python.org/pypi/utm</a>) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory <cite>dyfi/thirdparty/utm</cite>.</li>
+<li><strong>PhantomJS</strong> (<a class="reference external" href="http://phantomjs.org/">http://phantomjs.org/</a>) renders maps into static images (PNG). Normally, the <code class="file docutils literal"><span class="pre">install.sh</span></code> script installs this via <cite>conda</cite>.</li>
+<li><strong>Leaflet</strong> (<a class="reference external" href="http://leafletjs.com">http://leafletjs.com</a>) is used to render maps from GeoJSON-formatted data. DYFI installs Leaflet locally in the <cite>leaflet/inc</cite> directory. You can update those Leaflet components manually or use a CDN for the latest version (see the commented portion of the <cite>leaflet/viewer.html</cite> file for an example of invoking Leaflet via CDN.)</li>
+<li><strong>utm</strong> (<a class="reference external" href="https://pypi.python.org/pypi/utm">https://pypi.python.org/pypi/utm</a>) is a Python package for converting latitude/longitude coordinates into UTM (Universal Transverse Mercator) strings. DYFI includes a local version of this module in the directory <cite>dyfi/thirdparty/utm</cite>.</li>
 </ul>
 </div>
 <div class="section" id="configuration-file">
@@ -184,21 +184,21 @@
 <h2>Generation of dynamic and static image maps<a class="headerlink" href="#generation-of-dynamic-and-static-image-maps" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <cite>PhantomJS</cite> package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.</p>
+<p class="last">The <strong class="program">PhantomJS</strong> package must be installed to create static images. This is a change from the previous version of DYFI which used Generic Mapping Tools (GMT) for plotting and map generation.</p>
 </div>
 <p>DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.</p>
 <ol class="arabic simple">
 <li>The <a class="reference internal" href="dyfi.html#module-dyfi.aggregate"><span class="std std-ref">Aggregate</span></a> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
-<li>The <span class="xref std std-ref">Map</span> class adds the event data (epicentral location and magnitude).</li>
-<li>The <span class="xref std std-ref">Map.toImage</span> saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
-<li><span class="xref std std-ref">Map.toImage</span> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>
+<li>The <a class="reference internal" href="dyfi.html#module-dyfi.map"><span class="std std-ref">Map</span></a> class adds the event data (epicentral location and magnitude).</li>
+<li>The <span class="xref std std-ref">Map.toImage</span> method saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
+<li><span class="xref std std-ref">toImage</span> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>
 <li>The <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> script takes uses the file <code class="file docutils literal"><span class="pre">leaflet/viewer.html.template</span></code> as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.</li>
-<li><code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> calls <cite>PhantomJS</cite> on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).</li>
+<li><code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> calls <strong class="program">PhantomJS</strong> on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).</li>
 <li><span class="xref std std-ref">MaptoImage</span> moves the temporary output into the correct event ID’s <code class="file docutils literal"><span class="pre">data</span></code> directory.</li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.</p>
+<p class="last">Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with <strong class="program">PhantomJS</strong>.</p>
 </div>
 </div>
 <div class="section" id="auxiliary-processes">
