@@ -126,7 +126,7 @@
 <li><em>db:</em> This describes the location and type of the DYFI database (see below).</li>
 <li><em>directories:</em> This has links to the data directories.<ul>
 <li><em>data:</em> This points to the output directories. The DYFI4 products for each event ID are stored here, under its own event ID subdirectory.</li>
-<li><em>leaflet:</em> This points to the directory where Leaflet processing is done. See <span class="xref std std-ref">Generation of map products</span>.</li>
+<li><em>leaflet:</em> This points to the directory where Leaflet processing is done. See <a class="reference internal" href="#generation-of-dynamic-and-static-image-maps"><span class="std std-ref">Generation of dynamic and static image maps</span></a>.</li>
 </ul>
 </li>
 <li><em>executables:</em> This lists various external programs used by DYFI. The <em>screenshot</em> line is used to call <cite>PhantomJS</cite> (see <a class="reference internal" href="#generation-of-dynamic-and-static-image-maps"><span class="std std-ref">Generation of dynamic and static image maps</span></a>). Do not change this unless you are modifying the static image generation process.</li>
@@ -188,7 +188,7 @@
 </div>
 <p>DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.</p>
 <ol class="arabic simple">
-<li>The <span class="xref std std-ref">Aggregate</span> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
+<li>The <a class="reference internal" href="dyfi.html#module-dyfi.aggregate"><span class="std std-ref">Aggregate</span></a> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
 <li>The <span class="xref std std-ref">Map</span> class adds the event data (epicentral location and magnitude).</li>
 <li>The <span class="xref std std-ref">Map.toImage</span> saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
 <li><span class="xref std std-ref">Map.toImage</span> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>

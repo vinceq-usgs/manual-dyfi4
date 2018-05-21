@@ -66,7 +66,7 @@ The file has five sections:
 
   - *data:* This points to the output directories. The DYFI4 products for each event ID are stored here, under its own event ID subdirectory.
 
-  - *leaflet:* This points to the directory where Leaflet processing is done. See :ref:`Generation of map products`.
+  - *leaflet:* This points to the directory where Leaflet processing is done. See :ref:`Generation of dynamic and static image maps`.
 
 - *executables:* This lists various external programs used by DYFI. The *screenshot* line is used to call `PhantomJS` (see :ref:`Generation of dynamic and static image maps`). Do not change this unless you are modifying the static image generation process.
 
@@ -121,7 +121,7 @@ Generation of dynamic and static image maps
 
 DYFI uses PhantomJS to turn Leaflet-based maps into static images. This section outlines the procedure used by DYFI for creating these products. See individual module entries for details.
 
-1. The :ref:`Aggregate` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
+1. The :ref:`Aggregate <dyfi.aggregate>` module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.
 
 2. The :ref:`Map` class adds the event data (epicentral location and magnitude).
 
