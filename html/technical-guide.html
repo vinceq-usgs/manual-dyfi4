@@ -45,8 +45,8 @@
 <div class="section" id="process-flowchart">
 <h2>Process flowchart<a class="headerlink" href="#process-flowchart" title="Permalink to this headline">¶</a></h2>
 <p>The following diagram shows the flowchart for the creation of DYFI products. Object classes and methods are explained in the <a class="reference internal" href="modules.html"><span class="doc">Module List</span></a>.</p>
-<img alt="_images/diagram_flowchart.svg" src="_images/diagram_flowchart.svg" /><div class="admonition note">
-<p class="first admonition-title">Note</p>
+<img alt="_images/diagram_flowchart.svg" src="_images/diagram_flowchart.svg" /><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
 <p class="last">In the above diagrams, items shown in <strong>red</strong> contain or transfer personally identifiable information (PII). Care must be taken to make sure that data in these sections are properly handled.</p>
 </div>
 </div>
@@ -54,8 +54,8 @@
 <h2>Input streams<a class="headerlink" href="#input-streams" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="earthquake-events">
 <h3>Earthquake events<a class="headerlink" href="#earthquake-events" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
-<p>The event data is described below.</p>
+<p>DYFI maintains its own database table of earthquake events. An external mechanism is required to populate this database and trigger the DYFI process after an earthquake.</p>
+<p>In the event table, each earthquake is described by a separate row. The event data is described below.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="22%" />
@@ -161,8 +161,13 @@
 </div>
 <div class="section" id="user-responses">
 <h3>User responses<a class="headerlink" href="#user-responses" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
-<p>The extended table data is described below.</p>
+<p>DYFI maintains its own database table of earthquake user responses. An external mechanism is required to populate this database and possibly trigger the DYFI process when a possible earthquake has occured.</p>
+<p>For one possible method of triggering DYFI without an earthquake notification, see the BETA project <cite>DYFI Autolocator &lt;https://github.com/vinceq-usgs/autolocator&gt;</cite>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">User reponses have the possibility of containing PII (Personally Identifiable Information) data. In particular, the fields <em>name</em>, <em>street</em>, <em>phone</em>, <em>email</em>, and <em>comments</em> ask for PII data; but all user-filled fields have the potential of taking PII data. Make sure that this table, and data transfer mechanisms that access it, are secure.</p>
+</div>
+<p>In the response table (called ‘extended table’ for historic reasons), each user response is described by a separate row. The response data is described below.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="22%" />
@@ -335,6 +340,7 @@
 </table>
 <p>All columns are Sqlite text fields unless indicated otherwise.</p>
 <ul class="simple">
+<li>Columns marked <strong>DYFI Felt Report</strong> are populated from the online form.</li>
 <li><em>orig_id</em> is initially copied from <em>eventid</em>. For responses that were not originally attached to an event (“unassociated entries”), both fields would have the value “unknown”. When this entry is associated to an event or updated to a different ID, this field will show the original value.</li>
 <li><em>suspect</em> is set automatically by the <code class="xref py py-obj docutils literal"><span class="pre">Entry</span></code> module when the entry is suspected to be bogus or an outlier. The operator may also manually flag entries this way.</li>
 <li><em>time_now</em> is set by the DYFI Felt Report submit function. This is the time used for associating entries.</li>

@@ -190,10 +190,13 @@
 <ol class="arabic simple">
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Aggregate</span></code> module creates the aggregated data in GeoJSON format aggregated entries and the computed intensities.</li>
 <li>The <code class="xref py py-obj docutils literal"><span class="pre">Map</span></code> class adds the event data (epicentral location and magnitude).</li>
-<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> saves the GeoJSON data into a temporary file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory.</li>
-<li>The file <code class="file docutils literal"><span class="pre">leaflet/viewer.html</span></code> is an HTML Leaflet file that loads the GeoJSON file and renders the map. By default, the open source <cite>OpenStreetMaps</cite> basemap is used.</li>
-<li><cite>PhantomJS</cite> is run on the HTML page. This renders the HTML into a static PNG file.</li>
+<li>The <code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> saves the GeoJSON data into a temporary JavaScript file in the <code class="file docutils literal"><span class="pre">leaflet</span></code> directory. It also creates a temporary filename for the output (PNG) image.</li>
+<li><code class="xref py py-obj docutils literal"><span class="pre">Map.toImage</span></code> calls the script <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> and the temporary datafile as arguments.</li>
+<li>The <code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> script takes uses the file <code class="file docutils literal"><span class="pre">leaflet/viewer.html.template</span></code> as a template to create a temporary viewer HTML file. This HTML file will load the JavaScript data (step 3) directly as an inline script.</li>
+<li><code class="file docutils literal"><span class="pre">leaflet/capture.js</span></code> calls <cite>PhantomJS</cite> on the viewer HTML and renders it into a static (PNG) image with the temporary output filename (step 3).</li>
+<li><code class="xref py py-obj docutils literal"><span class="pre">MaptoImage</span></code> moves the temporary output into the correct event ID’s <code class="file docutils literal"><span class="pre">data</span></code> directory.</li>
 </ol>
+<p>Rather than dynamically loading the event and response data, this method was chosen as the simplest, most robust way avoid CORS and other browser permission issues, and asynchronous loading problems with PhantomJS.</p>
 </div>
 <div class="section" id="auxiliary-processes">
 <h2>Auxiliary processes<a class="headerlink" href="#auxiliary-processes" title="Permalink to this headline">¶</a></h2>

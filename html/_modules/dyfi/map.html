@@ -142,15 +142,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">leafletdir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">directories</span><span class="p">[</span><span class="s1">&#39;leaflet&#39;</span><span class="p">]</span>
-        <span class="n">leafletdatafile</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/data.js&#39;</span> <span class="o">%</span> <span class="n">leafletdir</span>
-        <span class="n">pngfile</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/screenshot.png&#39;</span> <span class="o">%</span> <span class="n">leafletdir</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">pngfile</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">pngfile</span><span class="p">)</span>
 
-        <span class="c1"># This creates a data.js file in the leaflet directory which is just</span>
+        <span class="c1"># This creates a temporary JS file in ./leaflet which is just</span>
         <span class="c1"># a GeoJSON file but with VAR= to make it valid JavaScript.</span>
         <span class="c1"># This is a lot easier than dealing with browser CORS shenanigans.</span>
-
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputdata</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputdata</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jsonText</span><span class="p">:</span>
@@ -166,12 +161,15 @@
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">tmpfilename</span>
             <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">)</span>
             <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: bad or missing temporary JSON file, removing.&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">,</span><span class="n">leafletdatafile</span><span class="p">)</span>
         <span class="n">command</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">executables</span><span class="p">[</span><span class="s1">&#39;screenshot&#39;</span><span class="p">]</span>
         <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;__ABSPATH__&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">leafletdir</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">command</span><span class="p">]</span>
+        <span class="n">command</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">)</span>
+        <span class="n">command</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpfilename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">leafletdir</span><span class="o">+</span><span class="s1">&#39;/log.stdout.txt&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logOut</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">leafletdir</span><span class="o">+</span><span class="s1">&#39;/log.stderr.txt&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logErr</span><span class="p">:</span>
 
@@ -183,9 +181,9 @@
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Something wrong with subprocess call!&#39;</span><span class="p">)</span>
 
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmpfilename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span><span class="n">outputfile</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Map.GeoJSONtoImage: ...Done.&#39;</span><span class="p">)</span>
-
-            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">pngfile</span><span class="p">,</span><span class="n">outputfile</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmpfilename</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">outputfile</span></div></div>
 
