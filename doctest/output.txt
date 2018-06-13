@@ -1,17 +1,17 @@
-Results of doctest builder run on 2018-05-11 17:09:27
+Results of doctest builder run on 2018-06-13 14:44:19
 =====================================================
 
 Document: validation
 --------------------
 1 items passed all tests:
-  58 tests in default
-58 tests in 1 items.
-58 passed and 0 failed.
+  66 tests in default
+66 tests in 1 items.
+66 passed and 0 failed.
 Test passed.
 
 Doctest summary
 ===============
-   58 tests
+   66 tests
     0 failures in tests
     0 failures in setup code
     0 failures in cleanup code
